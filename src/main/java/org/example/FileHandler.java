@@ -3,7 +3,6 @@ package org.example;
 import java.util.HashMap;
 
 public abstract class FileHandler {
-    private FileType fileType;
     FileHandler nextFileHandler;
 
 
