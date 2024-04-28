@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 
 public class LoadReatorsJson extends FileHandler {
-    private FileHandler nextFileHandler;
     public  HashMap<String, Reactor> loadReactors(String filePath) {
         HashMap<String, Reactor> reactors = new HashMap<>();
 
