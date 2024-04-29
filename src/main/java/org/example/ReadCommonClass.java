@@ -3,7 +3,7 @@ package org.example;
 import java.util.HashMap;
 
 public class ReadCommonClass {
-    public static HashMap<String, Reactor> ReadCommonClass(String filePath){
+    public  HashMap<String, Reactor> readCommonClass(String filePath){
         LoadReatorsJson loadReatorsJson = new LoadReatorsJson();
         LoadReactorsXml loadReactorsXml = new LoadReactorsXml();
         LoadReactorsYaml loadReactorsYaml= new LoadReactorsYaml();

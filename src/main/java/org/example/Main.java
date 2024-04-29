@@ -50,7 +50,8 @@ public class Main {
 
                             // Сохраняем путь к файлу в поле
                         try{
-                        HashMap<String, Reactor> reactors = ReadCommonClass.ReadCommonClass(selectedFile.getAbsolutePath());
+                            ReadCommonClass readCommonClass = new ReadCommonClass();
+                        HashMap<String, Reactor> reactors = readCommonClass.readCommonClass(selectedFile.getAbsolutePath());
                         for (Reactor reactor : reactors.values()) {
                             System.out.println(reactor.classe);
                         }
