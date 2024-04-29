@@ -9,11 +9,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoadReactorsYaml extends FileHandler{
+    @Override
+    public boolean returnTypeStatus(String filePath) {
+        File file = new File(filePath);
+        if (file.getName().substring(file.getName().lastIndexOf(".") + 1).equals("yaml")) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public HashMap<String, Reactor> loadReactors(String filePath) {
         Yaml yaml = new Yaml();
         HashMap<String, Reactor> reactors = new HashMap<>();
         File file = new File(filePath);
-        if (file.getName().substring(file.getName().lastIndexOf(".") + 1).equals("yaml")) {
             try {
                 FileInputStream fis = new FileInputStream(filePath);
                 // Parse YAML as Map<String, Map<String, Object>>
@@ -30,10 +40,8 @@ public class LoadReactorsYaml extends FileHandler{
                 e.printStackTrace();
                 reactors = nextFileHandler.loadReactors(filePath);
             }
-        }
-        else {
-            reactors = nextFileHandler.loadReactors(filePath);
-        }
+
+
         return reactors;
     }
 }

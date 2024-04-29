@@ -17,10 +17,18 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 public class LoadReactorsXml extends FileHandler {
+    public boolean returnTypeStatus(String filePath) {
+        File file = new File(filePath);
+        if (file.getName().substring(file.getName().lastIndexOf(".") + 1).equals("xml")) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public  HashMap<String, Reactor> loadReactors(String filePath) {
         HashMap<String, Reactor> reactors = new HashMap<>();
         File file = new File(filePath);
-        if (file.getName().substring(file.getName().lastIndexOf(".") + 1).equals("xml")) {
 
             try {
                 File inputFile = new File(filePath);
@@ -48,10 +56,7 @@ public class LoadReactorsXml extends FileHandler {
                 e.printStackTrace();
                 reactors=nextFileHandler.loadReactors(filePath);
             }
-        }
-        else {
-            reactors=nextFileHandler.loadReactors(filePath);
-        }
+
 
         return reactors;
     }

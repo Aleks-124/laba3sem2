@@ -10,12 +10,20 @@ import java.util.HashMap;
 
 
 public class LoadReatorsJson extends FileHandler {
+    public boolean returnTypeStatus(String filePath) {
+        File file = new File(filePath);
+        if (file.getName().substring(file.getName().lastIndexOf(".") + 1).equals("json")) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public  HashMap<String, Reactor> loadReactors(String filePath) {
         HashMap<String, Reactor> reactors = new HashMap<>();
 
         JSONParser parser = new JSONParser();
         File file = new File(filePath);
-        if (file.getName().substring(file.getName().lastIndexOf(".") + 1).equals("json")){
 
             try {
                 JSONObject reactorsObj = (JSONObject) parser.parse(new FileReader(filePath));
@@ -43,10 +51,7 @@ public class LoadReatorsJson extends FileHandler {
                 nextFileHandler.loadReactors(filePath);
             }
 
-        }
-        else{
-            reactors=nextFileHandler.loadReactors(filePath);
-        }
+
 
         return reactors;
     }

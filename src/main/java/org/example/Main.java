@@ -50,12 +50,7 @@ public class Main {
 
                             // Сохраняем путь к файлу в поле
                         try{
-                        LoadReatorsJson loadReatorsJson = new LoadReatorsJson();
-                        LoadReactorsXml loadReactorsXml = new LoadReactorsXml();
-                        LoadReactorsYaml loadReactorsYaml= new LoadReactorsYaml();
-                        loadReactorsYaml.setNextMessageSender(loadReactorsXml);
-                        loadReactorsXml.setNextMessageSender(loadReatorsJson);
-                        HashMap<String, Reactor> reactors = loadReactorsYaml.loadReactors(selectedFile.getAbsolutePath());
+                        HashMap<String, Reactor> reactors = ReadCommonClass.ReadCommonClass(selectedFile.getAbsolutePath());
                         for (Reactor reactor : reactors.values()) {
                             System.out.println(reactor.classe);
                         }
