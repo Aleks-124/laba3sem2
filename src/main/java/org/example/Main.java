@@ -39,6 +39,7 @@ public class Main {
                     public void actionPerformed(ActionEvent e) {
                         // Создаем объект для выбора файла
                         JFileChooser fileChooser = new JFileChooser();
+                        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 
                         // Открываем диалоговое окно для выбора файла
                         int result = fileChooser.showOpenDialog(frame);
