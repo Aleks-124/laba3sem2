@@ -1,6 +1,8 @@
 package org.example;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -17,24 +19,24 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
 
-                // Создаем фрейм
-                JFrame frame = new JFrame("Импорт файла");
-                frame.setSize(300, 100);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Создаем фрейм
+        JFrame frame = new JFrame("Импорт файла");
+        frame.setSize(300, 100);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                // Создаем панель для размещения элементов
-                JPanel panel = new JPanel();
-                frame.add(panel);
+        // Создаем панель для размещения элементов
+        JPanel panel = new JPanel();
+        frame.add(panel);
 
-                // Создаем кнопку для выбора файла
-                JButton button = new JButton("Выбрать файл");
-                panel.add(button);
+        // Создаем кнопку для выбора файла
+        JButton button = new JButton("Выбрать базу данных");
+        panel.add(button);
 
-                // Создаем поле для отображения пути к файлу
+        // Создаем поле для отображения пути к файлу
 
-                // Добавляем обработчик события нажатия на кнопку
+        // Добавляем обработчик события нажатия на кнопку
 
-        button.addActionListener(new ActionListener() {
+         button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Создаем объект для выбора файла
@@ -47,62 +49,22 @@ public class Main {
                         // Если файл был выбран
                             // Получаем выбранный файл
                             File selectedFile = fileChooser.getSelectedFile();
-
-                            // Сохраняем путь к файлу в поле
-                        try{
-                            ReadCommonClass readCommonClass = new ReadCommonClass();
-                        HashMap<String, Reactor> reactors = readCommonClass.readCommonClass(selectedFile.getAbsolutePath());
-                        for (Reactor reactor : reactors.values()) {
-                            System.out.println(reactor.classe);
+                            System.out.println(selectedFile.getAbsolutePath());
+                        Calculation calculation = new Calculation(ReactorDatabase.getReactors(selectedFile.getAbsolutePath()));
+                        if (calculation.getValuePerCountry().isEmpty()){
+                            JOptionPane.showMessageDialog(null, "Ошибка импорта", "Информационное сообщение", JOptionPane.INFORMATION_MESSAGE);
                         }
-                        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
-                        DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
+                        try {
+                            ExcelWriter.excelWriter(calculation.getValuePerOwner(),"владелец");
+                            ExcelWriter.excelWriter(calculation.getValuePerRegion(),"регион");
+                            ExcelWriter.excelWriter(calculation.getValuePerCountry(),"страна");
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
 
-                        // Добавляем реакторы в модель дерева
-                        for (Map.Entry<String, Reactor> entry : reactors.entrySet()) {
-                            // Создаем узел для реактора
-                            DefaultMutableTreeNode reactorNode = new DefaultMutableTreeNode(entry.getKey());
-
-                            // Добавляем атрибуты реактора в узел
-                            reactorNode.add(new DefaultMutableTreeNode("Сгорание: " + entry.getValue().burnup));
-                            reactorNode.add(new DefaultMutableTreeNode("Класс: " + entry.getValue().classe));
-                            reactorNode.add(new DefaultMutableTreeNode("Электрическая мощность: " + entry.getValue().electricalCapacity));
-                            reactorNode.add(new DefaultMutableTreeNode("Первая загрузка: " + entry.getValue().firstLoad));
-                            reactorNode.add(new DefaultMutableTreeNode("КПД: " + entry.getValue().kpd));
-                            reactorNode.add(new DefaultMutableTreeNode("Срок службы: " + entry.getValue().lifeTime));
-                            reactorNode.add(new DefaultMutableTreeNode("Тепловая мощность: " + entry.getValue().terminalCapacity));
-                            reactorNode.add(new DefaultMutableTreeNode("Тип файла: " + entry.getValue().fileType));
-                            treeModel.insertNodeInto((MutableTreeNode) reactorNode, (MutableTreeNode) treeModel.getRoot(), treeModel.getChildCount(treeModel.getRoot()));
-                            // Добавляем узел реактора в модель дерева
                         }
-
-                        // Создаем дерево
-                        JTree tree = new JTree(treeModel);
-
-                        // Разрешаем только один выбор узлов
-                        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-
-                        // Создаем панель прокрутки для дерева
-                        JScrollPane scrollPane = new JScrollPane(tree);
-
-                        // Добавляем панель прокрутки в фрейм
-                        JFrame frame = new JFrame("Дерево реакторов");
-                        frame.add(scrollPane);
-
-                        // Устанавливаем размер фрейма
-                        frame.setSize(400, 300);
-
-                        // Отображаем фрейм
-                        frame.setVisible(true); }
-                        catch (Exception ex) {
-                                ex.printStackTrace();
-                                System.out.println("Ошибка при импорте и чтении данных из файла");
-                                String errorMessage = "Ошибка при импорте и чтении данных из файла";
-
-                                // Отображение информационного сообщения
-                                JOptionPane.showMessageDialog(null, errorMessage, "Ошибка", JOptionPane.INFORMATION_MESSAGE);
-                            }
-
+                        frame.dispose();
+                        // Создать информационное сообщение
+                        JOptionPane.showMessageDialog(null, "Данные выгружены в эксель", "Информационное сообщение", JOptionPane.INFORMATION_MESSAGE);
 
                     }
                 });
@@ -112,5 +74,4 @@ public class Main {
                 frame.setVisible(true);
 
         }
-
     }

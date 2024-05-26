@@ -37,7 +37,7 @@ public class LoadReactorsXml extends FileHandler {
                 Document doc = dBuilder.parse(inputFile);
                 doc.getDocumentElement().normalize();
                 NodeList reactorList = doc.getElementsByTagName("root").item(0).getChildNodes();
-                for (int i = 0; i < reactorList.getLength(); i++) {
+                /* for (int i = 0; i < reactorList.getLength(); i++) {
                     Node reactorNode = reactorList.item(i);
                     if (reactorNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element reactorElement = (Element) reactorNode;
@@ -51,7 +51,7 @@ public class LoadReactorsXml extends FileHandler {
                         Reactor reactor = new Reactor(burnup, classe, electricalCapacity, firstLoad, kpd, lifetime, terminalCapacity, "xml");
                         reactors.put(reactor.classe, reactor);
                     }
-                }
+                } */
             } catch (Exception e) {
                 e.printStackTrace();
                 reactors=nextFileHandler.loadReactors(filePath);

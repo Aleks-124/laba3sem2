@@ -28,7 +28,7 @@ public class LoadReatorsJson extends FileHandler {
             try {
                 JSONObject reactorsObj = (JSONObject) parser.parse(new FileReader(filePath));
 
-                for (Object key : reactorsObj.keySet()) {
+                /* for (Object key : reactorsObj.keySet()) {
                     String reactorClass = (String) key;
                     JSONObject reactorData = (JSONObject) reactorsObj.get(reactorClass);
 
@@ -44,7 +44,7 @@ public class LoadReatorsJson extends FileHandler {
                     );
 
                     reactors.put(reactorClass, reactor);
-                }
+                } */
 
             } catch (IOException | ParseException e) {
                 e.printStackTrace();

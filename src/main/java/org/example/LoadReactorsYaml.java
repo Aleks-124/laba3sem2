@@ -30,11 +30,11 @@ public class LoadReactorsYaml extends FileHandler{
                 Map<String, Map<String, Object>> data = yaml.load(fis);
 
                 // Create Reactor objects
-                for (String reactorName : data.keySet()) {
+                /* for (String reactorName : data.keySet()) {
                     Map<String, Object> reactorData = data.get(reactorName);
                     Reactor reactor = new Reactor(((Number) reactorData.get("burnup")).doubleValue(), (String) reactorData.get("class"), ((Number) reactorData.get("electrical_capacity")).doubleValue(), ((Number) reactorData.get("first_load")).doubleValue(), ((Number) reactorData.get("kpd")).doubleValue(), ((Number) reactorData.get("life_time")).doubleValue(), ((Number) reactorData.get("termal_capacity")).doubleValue(), "yaml");
                     reactors.put(reactor.classe, reactor);
-                }
+                } */
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
