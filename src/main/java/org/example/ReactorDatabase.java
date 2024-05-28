@@ -12,8 +12,7 @@ import java.util.List;
 public class ReactorDatabase {
 
     public static ArrayList<Reactor> getReactors(String filePath) {
-        // String DB_URL = "jdbc:sqlite:"+filePath;
-        String DB_URL = "jdbc:sqlite:C:\\laba3sem2\\reactors.sqlite";
+         String DB_URL = "jdbc:sqlite:"+filePath;
         ArrayList<Reactor> reactors = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
